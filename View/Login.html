@@ -1,68 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Login Page</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="stylesheet" href="CSS/login.css">
-</head>
-<body>
-<div class="role-selector">
-    <div class="role-box" onclick="selectRole('Patient');">Patient</div>
-    <div class="role-box" onclick="selectRole('Doctor');">Doctor</div>
-    <div class="role-box" onclick="selectRole('Admin');">Admin</div>
-    <div class="role-box" onclick="selectRole('Lab Tech');">Lab Tech</div>
-</div>
-<div class="login-container">
-    <img src="Images/hospital-login.png" style="height: 80px;width: 80px;" alt="Hospital Icon">
-    <h2 id="welcome-back">Welcome Back Patient!</h2>
-    <form>
-        <input type="email" class="form-input" placeholder="Email Address" required>
-        <div class="password-container">
-            <input type="password" class="form-input" id="password" placeholder="Password" required>
-            <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="styles/login.css"> 
+    </head>
+    <body>
+        <div class="role-selector">
+            <div class="role-box" onclick="selectRole('Patient');">Patient</div>
+            <div class="role-box" onclick="selectRole('Doctor');">Doctor</div>
+            <div class="role-box" onclick="selectRole('Admin');">Admin</div>
+            <div class="role-box" onclick="selectRole('Lab Tech');">Lab Tech</div>
         </div>
-        <div class="options">
-            <label>
-                <input type="checkbox" id="remember-me"> Remember Me
-            </label>
+        <div class="login-container">
+            <img src="hospital.png" alt="Hospital Icon">
+            <h2 id="welcome-back">Welcome Back Patient!</h2>
+            <form>
+                <input type="email" class="form-input" placeholder="Email Address" required>
+                <div class="password-container">
+                    <input type="password" class="form-input" id="password" placeholder="Password" required>
+                    <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
+                </div>
+                <div class="options">
+                    <label>
+                        <input type="checkbox" id="remember-me"> Remember Me
+                    </label>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+            <div class="signup-text">
+                No account, yet? <a href="#">Sign Up Here</a>
+            </div>
         </div>
-        <button type="submit" class="login-button">Login</button>
-    </form>
-    <div class="signup-text">
-        No account, yet? <a href="#">Sign Up Here</a>
-    </div>
-</div>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    selectRole('Patient');
-});
-function togglePassword() {
-    var passwordInput = document.getElementById('password');
-    var toggleIcon = document.querySelector('.toggle-password');
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleIcon.classList.remove('fa-eye');
-        toggleIcon.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        toggleIcon.classList.remove('fa-eye-slash');
-        toggleIcon.classList.add('fa-eye');
-    }
-}
-
-function selectRole(role) {
-    var welcomeBack = document.getElementById('welcome-back');
-    var roleBoxes = document.querySelectorAll('.role-box');
-    roleBoxes.forEach(function(box) {
-        box.classList.remove('active');
-    });
-    welcomeBack.textContent = 'Welcome Back' + (role ? ' ' + role: '') + '!';
-    roleBoxes.forEach(function(box) {
-        if (box.textContent === role) {
-            box.classList.add('active');
+        <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var toggleIcon = document.querySelector('.toggle-password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
         }
-    });
-}
-</script>
-</body>
+
+        function selectRole(role) {
+            var welcomeBack = document.getElementById('welcome-back');
+            var roleBoxes = document.querySelectorAll('.role-box');
+            roleBoxes.forEach(function(box) {
+                box.classList.remove('active');
+            });
+            welcomeBack.textContent = 'Welcome Back' + (role ? ' ' + role: '') + '!';
+            roleBoxes.forEach(function(box) {
+                if (box.textContent === role) {
+                    box.classList.add('active');
+                }
+            });
+        }
+        window.onload = function() {
+            selectRole('Patient');
+        };
+        </script>
+    </body>
 </html>
