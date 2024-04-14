@@ -1,0 +1,101 @@
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.login-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+.login-container img {
+    width: 50px;
+    margin-bottom: 20px;
+}
+.login-container h2 {
+    margin-bottom: 20px;
+}
+.form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+.login-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #ff0000;
+    color: black;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+.login-button:hover {
+    background-color: #b30000;
+}
+.options {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+.signup-text {
+    text-align: center;
+    margin-top: 20px;
+}
+.signup-text a {
+    text-decoration: none;
+    color: red;
+}
+.signup-text a:hover {
+    text-decoration: underline;
+}
+.password-container {
+    position: relative;
+    margin-bottom: 10px;
+}
+.toggle-password {
+    position: absolute;
+    right: -10px;
+    top: 25%;
+    cursor: pointer;
+    user-select: none;
+    font-size: 16px;
+}
+.role-selector {
+    display: flex;
+    justify-content: space-between;
+    width: 380px;
+}
+.role-box {
+    background-color: #ff0000;
+    color: black;
+    padding: 5px;
+    padding-left: -5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 10px;
+    margin-right: 2px;
+    width: calc(25% - 6px);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    opacity: 1;
+}
+.role-box:hover {
+    opacity: 0.7;
+}
+.active {
+    background-color: black;
+    color: #ff0000;
+}

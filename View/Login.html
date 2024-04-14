@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 <head>
 <title>Login Page</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -122,12 +123,41 @@
         <div class="password-container">
             <input type="password" class="form-input" id="password" placeholder="Password" required>
             <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
+=======
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="styles/login.css"> 
+    </head>
+    <body>
+        <div class="role-selector">
+            <div class="role-box" onclick="selectRole('Patient');">Patient</div>
+            <div class="role-box" onclick="selectRole('Doctor');">Doctor</div>
+            <div class="role-box" onclick="selectRole('Admin');">Admin</div>
+            <div class="role-box" onclick="selectRole('Lab Tech');">Lab Tech</div>
+>>>>>>> 050d3c6bffda1ec88eb1e83792872a0c3bd3b7cd
         </div>
-        <div class="options">
-            <label>
-                <input type="checkbox" id="remember-me"> Remember Me
-            </label>
+        <div class="login-container">
+            <img src="hospital.png" alt="Hospital Icon">
+            <h2 id="welcome-back">Welcome Back!</h2>
+            <form>
+                <input type="email" class="form-input" placeholder="Email Address" required>
+                <div class="password-container">
+                    <input type="password" class="form-input" id="password" placeholder="Password" required>
+                    <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
+                </div>
+                <div class="options">
+                    <label>
+                        <input type="checkbox" id="remember-me"> Remember Me
+                    </label>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+            <div class="signup-text">
+                No account, yet? <a href="#">Sign Up Here</a>
+            </div>
         </div>
+<<<<<<< HEAD
         <button type="submit" class="login-button">Login</button>
     </form>
     <div class="signup-text">
@@ -162,9 +192,36 @@ function selectRole(role) {
     roleBoxes.forEach(function(box) {
         if (box.textContent === role) {
             box.classList.add('active');
+=======
+        <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var toggleIcon = document.querySelector('.toggle-password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+>>>>>>> 050d3c6bffda1ec88eb1e83792872a0c3bd3b7cd
         }
-    });
-}
-</script>
-</body>
+
+        function selectRole(role) {
+            var welcomeBack = document.getElementById('welcome-back');
+            var roleBoxes = document.querySelectorAll('.role-box');
+            roleBoxes.forEach(function(box) {
+                box.classList.remove('active');
+            });
+            welcomeBack.textContent = 'Welcome Back' + (role ? ' ' + role: '') + '!';
+            roleBoxes.forEach(function(box) {
+                if (box.textContent === role) {
+                    box.classList.add('active');
+                }
+            });
+        }
+        </script>
+    </body>
 </html>
