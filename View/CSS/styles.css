@@ -3,7 +3,7 @@
 }
 body{
     min-height: 100vh;
-    background-image: url(Images/Bg.jpg);
+    background-image: url(../Images/Bg.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
@@ -90,6 +90,10 @@ nav ul li a {
     color:rgba(255, 255, 255, 0.671);
     text-decoration: none;
 }
+nav ul li a:hover {
+    color: rgba(255, 255, 255, 0.4);
+}
+
 #btn {
     display: flex;
     align-items: center;
@@ -102,6 +106,9 @@ nav ul li a {
     background-color: rgb(205, 91, 91);
     font-weight: 500;
     cursor: pointer;
+}
+#btn:hover {
+    background-color: rgba(205, 91, 91,0.8);
 }
 #btn img {
     width: 20px;
@@ -116,6 +123,9 @@ nav #lef a {
     justify-content: center;
     text-decoration: none;
     color: rgba(255, 255, 255, 0.671);
+}
+nav #lef a:hover {
+    color: rgba(255, 255, 255, 0.4);
 }
 #lef img {
     display: inline-block;
