@@ -1,167 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Login Page</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<style>
-    body {
-        font-family: "Arial", sans-serif;
-        background-color: #f4f4f4;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .login-container {
-        background-color: #fff;
-        padding: 40px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 300px;
-        text-align: center;
-    }
-    .login-container img {
-        width: 50px;
-        margin-bottom: 20px;
-    }
-    .login-container h2 {
-        margin-bottom: 20px;
-    }
-    .form-input {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 3px;
-    }
-    .login-button {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        background-color: #ff0000;
-        color: black;
-        border-radius: 3px;
-        cursor: pointer;
-        margin-top: 8px;
-    }
-    .login-button:hover {
-        background-color: #b30000;
-    }
-    .options {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-top: 5px;
-        margin-bottom: 20px;
-    }
-    .signup-text {
-        text-align: center;
-        margin-top: 20px;
-    }
-    .signup-text a {
-        text-decoration: none;
-        color: red;
-    }
-    .signup-text a:hover {
-        text-decoration: underline;
-    }
-    .password-container {
-        position: relative;
-        margin-bottom: 10px;
-    }
-    .toggle-password {
-        position: absolute;
-        right: -10px;
-        top: 25%;
-        cursor: pointer;
-        user-select: none;
-        font-size: 16px;
-    }
-    .role-selector {
-        display: flex;
-        justify-content: space-between;
-        width: 380px;
-    }
-    .role-box {
-        background-color: #ff0000;
-        color: black;
-        padding: 5px;
-        padding-left: -5px;
-        border-top-left-radius: 5px;
-        border-bottom-right-radius: 10px;
-        margin-right: 2px;
-        width: calc(25% - 6px);
-        text-align: center;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-        opacity: 1;
-    }
-    .role-box:hover {
-        opacity: 0.7;
-    }
-    .active {
-        background-color: black;
-        color: #ff0000;
-    }
-</style>
-</head>
-<body>
-<div class="role-selector">
-    <div class="role-box" onclick="selectRole('Patient');">Patient</div>
-    <div class="role-box" onclick="selectRole('Doctor');">Doctor</div>
-    <div class="role-box" onclick="selectRole('Admin');">Admin</div>
-    <div class="role-box" onclick="selectRole('Lab Tech');">Lab Tech</div>
-</div>
-<div class="login-container">
-    <img src="hospital.png" alt="Hospital Icon">
-    <h2 id="welcome-back">Welcome Back!</h2>
-    <form>
-        <input type="email" class="form-input" placeholder="Email Address" required>
-        <div class="password-container">
-            <input type="password" class="form-input" id="password" placeholder="Password" required>
-            <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="styles/login.css"> 
+    </head>
+    <body>
+        <div class="role-selector">
+            <div class="role-box" onclick="selectRole('Patient');">Patient</div>
+            <div class="role-box" onclick="selectRole('Doctor');">Doctor</div>
+            <div class="role-box" onclick="selectRole('Admin');">Admin</div>
+            <div class="role-box" onclick="selectRole('Lab Tech');">Lab Tech</div>
         </div>
-        <div class="options">
-            <label>
-                <input type="checkbox" id="remember-me"> Remember Me
-            </label>
+        <div class="login-container">
+            <img src="hospital.png" alt="Hospital Icon">
+            <h2 id="welcome-back">Welcome Back!</h2>
+            <form>
+                <input type="email" class="form-input" placeholder="Email Address" required>
+                <div class="password-container">
+                    <input type="password" class="form-input" id="password" placeholder="Password" required>
+                    <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
+                </div>
+                <div class="options">
+                    <label>
+                        <input type="checkbox" id="remember-me"> Remember Me
+                    </label>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+            <div class="signup-text">
+                No account, yet? <a href="#">Sign Up Here</a>
+            </div>
         </div>
-        <button type="submit" class="login-button">Login</button>
-    </form>
-    <div class="signup-text">
-        No account, yet? <a href="#">Sign Up Here</a>
-    </div>
-</div>
-<script>
-function togglePassword() {
-    var passwordInput = document.getElementById('password');
-    var toggleIcon = document.querySelector('.toggle-password');
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleIcon.classList.remove('fa-eye');
-        toggleIcon.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        toggleIcon.classList.remove('fa-eye-slash');
-        toggleIcon.classList.add('fa-eye');
-    }
-}
-
-function selectRole(role) {
-    var welcomeBack = document.getElementById('welcome-back');
-    var roleBoxes = document.querySelectorAll('.role-box');
-    roleBoxes.forEach(function(box) {
-        box.classList.remove('active');
-    });
-    welcomeBack.textContent = 'Welcome Back' + (role ? ' ' + role: '') + '!';
-    roleBoxes.forEach(function(box) {
-        if (box.textContent === role) {
-            box.classList.add('active');
+        <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById('password');
+            var toggleIcon = document.querySelector('.toggle-password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
         }
-    });
-}
-</script>
-</body>
+
+        function selectRole(role) {
+            var welcomeBack = document.getElementById('welcome-back');
+            var roleBoxes = document.querySelectorAll('.role-box');
+            roleBoxes.forEach(function(box) {
+                box.classList.remove('active');
+            });
+            welcomeBack.textContent = 'Welcome Back' + (role ? ' ' + role: '') + '!';
+            roleBoxes.forEach(function(box) {
+                if (box.textContent === role) {
+                    box.classList.add('active');
+                }
+            });
+        }
+        </script>
+    </body>
 </html>
