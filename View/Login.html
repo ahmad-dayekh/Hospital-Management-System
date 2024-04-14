@@ -115,8 +115,8 @@
     <div class="role-box" onclick="selectRole('Lab Tech');">Lab Tech</div>
 </div>
 <div class="login-container">
-    <img src="hospital.png" alt="Hospital Icon">
-    <h2 id="welcome-back">Welcome Back!</h2>
+    <img src="Images/hospital-login.png" style="height: 80px;width: 80px;" alt="Hospital Icon">
+    <h2 id="welcome-back">Welcome Back Patient!</h2>
     <form>
         <input type="email" class="form-input" placeholder="Email Address" required>
         <div class="password-container">
@@ -135,6 +135,9 @@
     </div>
 </div>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    selectRole('Patient');
+});
 function togglePassword() {
     var passwordInput = document.getElementById('password');
     var toggleIcon = document.querySelector('.toggle-password');
