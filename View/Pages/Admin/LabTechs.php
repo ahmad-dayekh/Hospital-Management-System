@@ -78,14 +78,21 @@
                                     data-email='" . htmlspecialchars($row["ContactEmail"]) . "' 
                                     data-name='" . htmlspecialchars($row["FullName"]) . "' 
                                     data-phone='" . htmlspecialchars($row["ContactPhone"]) . "'
-                                    data-id='" . $row["TechnicianID"] . "'>View</button>
+                                    data-id='" . $row["TechnicianID"] . "'>
+                                    
+                                <span class='material-icons-sharp'>visibility</span>
+                                <span>View</span></button>   
                                 <button class='action-button edit-button'
                                     data-email='" . htmlspecialchars($row["ContactEmail"]) . "' 
                                     data-name='" . htmlspecialchars($row["FullName"]) . "' 
                                     data-phone='" . htmlspecialchars($row["ContactPhone"]) . "'
-                                    data-id='" . $row["TechnicianID"] . "'>Edit</button>
-                                <button onclick='openDeleteModal(" . htmlspecialchars($row["TechnicianID"]) . ")'
-                                    class='action-button delete-button'>Delete</button>
+                                    data-id='" . $row["TechnicianID"] . "'>
+                                    <span class='material-icons-sharp'>edit</span>
+                                    <span>Edit</span></button>
+                                    <button onclick='openDeleteModal(" . $row["TechnicianID"] . ")' class='action-button delete-button'>
+                                    <span class='material-icons-sharp'>delete</span>
+                                    <span>Delete</span>
+                                </button>
                             </td>
                         </tr>";
                         }
@@ -170,27 +177,24 @@
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Handle Add Technician Modal
     var addModal = document.getElementById("addTechnicianModal");
+    var viewModal = document.getElementById('viewTechnicianModal');
+    var editModal = document.getElementById('editTechnicianModal');
+    var deleteModal = document.getElementById('deleteTechnicianModal');
     var addBtn = document.getElementById("addBtn");
-    var closeAddSpans = document.querySelectorAll('#addTechnicianModal .close');
+    var viewBtns = document.querySelectorAll('.view-button');
+    var editBtns = document.querySelectorAll('.edit-button');
+    var deleteBtns = document.querySelectorAll('.delete-button');
+    var closeBtns = document.querySelectorAll('.modal .close');
 
+    // Open Add Technician Modal
     addBtn.onclick = function() {
         addModal.style.display = "block";
     };
 
-    closeAddSpans.forEach(function(span) {
-        span.onclick = function() {
-            addModal.style.display = "none";
-        };
-    });
-
-    // Handle View Technician Modal
-    var viewModal = document.getElementById('viewTechnicianModal');
-    var viewBtns = document.querySelectorAll('.view-button');
-
-    viewBtns.forEach(function (btn) {
-        btn.onclick = function () {
+    // Open View Technician Modal
+    viewBtns.forEach(function(btn) {
+        btn.onclick = function() {
             var data = btn.dataset;
             document.getElementById('email-view').value = data.email;
             document.getElementById('name-view').value = data.name;
@@ -199,12 +203,9 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     });
 
-    // Handle Edit Technician Modal
-    var editModal = document.getElementById('editTechnicianModal');
-    var editBtns = document.querySelectorAll('.edit-button');
-
-    editBtns.forEach(function (btn) {
-        btn.onclick = function () {
+    // Open Edit Technician Modal
+    editBtns.forEach(function(btn) {
+        btn.onclick = function() {
             var data = btn.dataset;
             document.getElementById('technician-id-edit').value = btn.getAttribute('data-id');
             document.getElementById('email-edit').value = data.email;
@@ -214,10 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     });
 
-    // Handle Delete Technician Modal
-    var deleteModal = document.getElementById('deleteTechnicianModal');
-    var deleteBtns = document.querySelectorAll('.delete-button');
-
+    // Open Delete Technician Modal
     deleteBtns.forEach(function(btn) {
         btn.onclick = function() {
             document.getElementById('delete-technician-id').value = btn.getAttribute('data-id');
@@ -225,13 +223,20 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     });
 
+    // Close Modals with Close Button and Outside Click
+    closeBtns.forEach(function(btn) {
+        btn.onclick = function() {
+            this.closest('.modal').style.display = 'none';
+        };
+    });
+
+    // Close modals when clicking outside of any modal content
     window.onclick = function(event) {
-        if (event.target == addModal || event.target == viewModal || event.target == editModal || event.target == deleteModal) {
+        if (event.target.classList.contains('modal')) {
             event.target.style.display = 'none';
         }
     };
 });
-
 </script>
 </body>
 </html>
