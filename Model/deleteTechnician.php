@@ -13,10 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['technicianID'])) {
 
         
         if (mysqli_stmt_execute($stmt)) {
-            
-            
-            header('Location: ../View/Pages/Admin/LabTechs.php');
-            exit();
+            echo ("Technician deleted successfully.");
         } else {
             echo "Error deleting record: " . mysqli_stmt_error($stmt);
         }
@@ -29,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['technicianID'])) {
 
     
     mysqli_close($conn);
+    header('Location: ../View/Pages/Admin/LabTechs.php');
+    exit();
 } else {
     
     header('Location: ../View/Pages/Admin/LabTechs.php');

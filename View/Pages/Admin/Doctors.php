@@ -27,15 +27,15 @@
           <span class="material-icons-sharp">science</span>
           <h3>Lab Technicians</h3>
         </a>
-        <a href="#">
+        <a href="Patients.php">
           <span class="material-icons-sharp">personal_injury</span>
           <h3>Patients</h3>
         </a>
-        <a href="#">
+        <a href="Appointments.php">
           <span class="material-icons-sharp">bookmark</span>
           <h3>Appointments</h3>
         </a>
-        <a href="#">
+        <a href="Messages.php">
           <span class="material-icons-sharp">mail</span>
           <h3>Messages</h3>
         </a>

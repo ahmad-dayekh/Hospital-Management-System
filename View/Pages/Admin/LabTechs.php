@@ -28,15 +28,15 @@
           <span class="material-icons-sharp">science</span>
           <h3>Lab Technicians</h3>
         </a>
-        <a href="#">
+        <a href="Patients.php">
           <span class="material-icons-sharp">personal_injury</span>
           <h3>Patients</h3>
         </a>
-        <a href="#">
+        <a href="Appointments.php">
           <span class="material-icons-sharp">bookmark</span>
           <h3>Appointments</h3>
         </a>
-        <a href="#">
+        <a href="Messages.php">
           <span class="material-icons-sharp">mail</span>
           <h3>Messages</h3>
         </a>
@@ -89,7 +89,7 @@
                                     data-id='" . $row["TechnicianID"] . "'>
                                     <span class='material-icons-sharp'>edit</span>
                                     <span>Edit</span></button>
-                                    <button onclick='openDeleteModal(" . $row["TechnicianID"] . ")' class='action-button delete-button'>
+                                    <button onclick='openDeleteModal(".$row["TechnicianID"].")' class='action-button delete-button'>
                                     <span class='material-icons-sharp'>delete</span>
                                     <span>Delete</span>
                                 </button>
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var viewBtns = document.querySelectorAll('.view-button');
     var editBtns = document.querySelectorAll('.edit-button');
     var deleteBtns = document.querySelectorAll('.delete-button');
-    var closeBtns = document.querySelectorAll('.modal .close');
+    var closeBtns = document.querySelectorAll('.modal .close, .cancel-confirm');
 
     // Open Add Technician Modal
     addBtn.onclick = function() {
@@ -215,14 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     });
 
-    // Open Delete Technician Modal
-    deleteBtns.forEach(function(btn) {
-        btn.onclick = function() {
-            document.getElementById('delete-technician-id').value = btn.getAttribute('data-id');
-            deleteModal.style.display = 'block';
-        };
-    });
-
     // Close Modals with Close Button and Outside Click
     closeBtns.forEach(function(btn) {
         btn.onclick = function() {
@@ -237,6 +229,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 });
+function openDeleteModal(technicianId) {
+      document.getElementById('delete-technician-id').value = technicianId;
+      document.getElementById('deleteTechnicianModal').style.display = 'block';
+}
 </script>
 </body>
 </html>
