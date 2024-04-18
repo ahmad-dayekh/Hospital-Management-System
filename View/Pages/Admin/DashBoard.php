@@ -125,7 +125,7 @@ $todayAppointmentsCount = $conn->query($todayAppointmentsCountQuery)->fetch_asso
           ?>
         </tbody>
       </table>
-      <button>Show all Appointments</button>
+      <button><a href="Appointments.php" style="text-decoration:none; color:white">Show all Appointments</a></button>
     </div>    
 </div>
 <script>
