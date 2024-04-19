@@ -24,13 +24,13 @@ CREATE TABLE Admins (
 CREATE TABLE Patients (
     PatientID INT PRIMARY KEY AUTO_INCREMENT,
     Username VARCHAR(255) UNIQUE NOT NULL,
-    PasswordHash VARCHAR(255) NOT NULL,
-    FullName VARCHAR(255) NOT NULL,
-    DateOfBirth DATE NOT NULL,
-    Gender ENUM('Male', 'Female') NOT NULL,
-    ContactEmail VARCHAR(255) UNIQUE NOT NULL,
-    ContactPhone VARCHAR(25),
-    Address TEXT,
+    PasswordHash VARCHAR(255) NOT NULL, --
+    FullName VARCHAR(255) NOT NULL, --
+    DateOfBirth DATE NOT NULL, --
+    Gender ENUM('Male', 'Female') NOT NULL, --
+    ContactEmail VARCHAR(255) UNIQUE NOT NULL, --
+    ContactPhone VARCHAR(25), --
+    Address TEXT, --
     MedicalHistory TEXT,
     Allergies TEXT,
     CurrentMedications TEXT,
