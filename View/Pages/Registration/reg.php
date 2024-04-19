@@ -5,54 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- ===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <!-- ===== CSS ===== -->
-    <link rel="stylesheet" href="login-reg-style.css">
-
-    <title>Login & Registration Form</title>
+    <link rel="stylesheet" href="reg-style.css">
+    <title>Registration Form</title>
 </head>
 
 <body>
-    <?php
-
-    ?>
-
     <div class="container">
         <div class="forms">
-            <div class="form login">
-                <span class="title">Login</span>
-                <form action="#" method="post">
-                    <div class="input-field">
-                        <input type="text" placeholder="Enter your email"name="email" required>
-                        <i class="uil uil-envelope icon"></i>
-                    </div>
-                    <div class="input-field">
-                        <input type="password" class="password" placeholder="Enter your password" name="password" required>
-                        <i class="uil uil-lock icon"></i>
-                        <i class="uil uil-eye-slash showHidePw"></i>
-                    </div>
-                    <div class="checkbox-text">
-                        <div class="checkbox-content">
-                            <input type="checkbox" id="logCheck">
-                            <label for="logCheck" class="text">Remember me</label>
-                        </div>
-
-                        <a href="#" class="text">Forgot password?</a>
-                    </div>
-                    <div class="input-field button">
-                        <input type="submit" value="Login" name="submit">
-                    </div>
-                </form>
-                <div class="login-signup">
-                    <span class="text">Not a member?
-                        <a href="#" class="text signup-link">Sign up Now</a>
-                    </span>
-                </div>
-            </div>
-            <!-- Registration Form -->
-           
             <div class="form signup">
                 <span class="title">Registration</span>
                 <form action="#" method="post">
@@ -73,6 +33,14 @@
                         <i class="uil uil-lock icon"></i>
                         <i class="uil uil-eye-slash showHidePw"></i>
                     </div>
+                    <div class="input-field">
+                        <input type="tel" placeholder="Enter your phone number" name="phone" required>
+                        <i class="uil uil-phone"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" placeholder="Enter your location" name="location" required>
+                        <i class="uil uil-location-point"></i>
+                    </div>
                     <div class="checkbox-text">
                         <div class="checkbox-content">
                             <input type="checkbox" id="termCon">
@@ -85,7 +53,7 @@
                 </form>
                 <div class="login-signup">
                     <span class="text">Already a member?
-                        <a href="#" class="text login-link">Login Now</a>
+                        <a href="login.php" class="text login-link">Login Now</a>
                     </span>
                 </div>
             </div>
