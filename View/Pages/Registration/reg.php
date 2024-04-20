@@ -1,3 +1,33 @@
+
+<?php
+// Include your database connection script
+include "../../Common PHP Functions/ConnectSql.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve user inputs
+    $username = $conn->real_escape_string($_POST['username']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $password = $conn->real_escape_string($_POST['password']); // Consider hashing this password
+    $phone = $conn->real_escape_string($_POST['phone']);
+    $location = $conn->real_escape_string($_POST['location']);
+
+    // Hash the password for security
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // SQL to insert a new user
+    $sql = "INSERT INTO patients (username, contactemail, passwordhash, contactphone) VALUES ('$username', '$email', '$hashed_password', '$phone')";
+
+    if ($conn->query($sql) === TRUE) {
+        // Redirect to the login page after successful registration
+        header("Location: login.php");
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

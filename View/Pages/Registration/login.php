@@ -1,3 +1,38 @@
+<?php
+session_start(); // Start the session to use session variables
+include "../../Common PHP Functions/ConnectSql.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $conn->real_escape_string($_POST['email']);
+    $password = $conn->real_escape_string($_POST['password']);
+
+    // SQL to fetch user from the database
+    $sql = "SELECT patientid, passwordhash FROM patients WHERE contactemail = '$email'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        // Check if the user exists
+        $row = $result->fetch_assoc();
+        if (password_verify($password, $row['passwordhash'])) {
+            // Password is correct, set the session
+            $_SESSION['user_id'] = $row['patientid']; // make sure to use the correct column name here as well
+            $_SESSION['email'] = $email;
+
+            // Redirect to the admin dashboard
+            header("Location: ../Admin/Dashboard.php");
+            exit();
+        } else {
+            echo "Invalid password.";
+        }
+    } else {
+        echo "No user found with that email address.";
+    }
+
+    $conn->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

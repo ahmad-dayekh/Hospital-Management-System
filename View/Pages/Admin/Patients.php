@@ -1,4 +1,6 @@
-<?php include "../../Common PHP Functions/ConnectSql.php"; ?>
+<?php
+session_start();
+include "../../Common PHP Functions/ConnectSql.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

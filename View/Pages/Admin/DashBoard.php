@@ -1,4 +1,6 @@
-<?php include "../../Common PHP Functions/ConnectSql.php";  
+<?php 
+
+include "../../Common PHP Functions/ConnectSql.php";  
 $doctorsCountQuery = "SELECT COUNT(*) AS total FROM Doctors";
 $patientsCountQuery = "SELECT COUNT(*) AS total FROM Patients";
 $labTechsCountQuery = "SELECT COUNT(*) AS total FROM LabTechnicians";
