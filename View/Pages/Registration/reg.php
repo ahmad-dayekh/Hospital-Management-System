@@ -108,12 +108,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="text" placeholder="Enter your location" name="location" required>
                         <i class="uil uil-location-point"></i>
                     </div>
-                    <div class="checkbox-text">
-                        <div class="checkbox-content">
-                            <input type="checkbox" id="termCon">
-                            <label for="termCon" class="text">I accepted all terms and conditions</label>
-                        </div>
-                    </div>
                     <div class="input-field button">
                         <input type="submit" value="Signup" name="submit">
                     </div>
