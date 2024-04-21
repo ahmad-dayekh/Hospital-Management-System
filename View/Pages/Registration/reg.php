@@ -9,14 +9,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $phone = $conn->real_escape_string($_POST['phone']);
     $location = $conn->real_escape_string($_POST['location']);
-
+    $is_int=true;
+    if (!is_numeric($phone)) {
+        echo "<script>alert('Phone number should be an integer.');</script>";
+        $is_int=false;
+    }
+    $is_email=true;
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || substr($email, -4) !== ".com") {
+        echo "<script>alert('Invalid email format. Email must contain @ and end with .com');</script>";
+        $is_email=false;
+    }
     // Check if email already exists in any of the tables
     $emailExists = false;
     $tables = [
         ['patients', 'contactemail'],
         ['labtechnicians', 'contactemail'],
         ['doctors', 'contactemail'],
-        ['admins', 'email']
+        ['admins', 'contactemail']
     ];
 
     foreach ($tables as $table) {
@@ -32,11 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 
+    if (!$is_int || !$is_email) {
+        $conn->close();
+    }
     if ($emailExists) {
-        echo "This email is already registered. Please use a different email.";
+        echo "<script>alert('This email is already registered. Please use a different email.');</script>";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
         $sql = "INSERT INTO patients (username, contactemail, passwordhash, contactphone) VALUES ('$username', '$email', '$hashed_password', '$phone')";
         if ($conn->query($sql) === TRUE) {
             header("Location: login.php");
@@ -48,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->close();
     }
 
-    $conn->close();
 }
 ?>
 

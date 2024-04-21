@@ -5,6 +5,7 @@ include "../../Common PHP Functions/ConnectSql.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $rememberMe = isset($_POST['remember']) ? $_POST['remember'] : '';
 
     // Define roles and associated tables and redirect pages
     $roles = [
@@ -13,15 +14,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ['table' => 'labtechnicians', 'passwordColumn' => 'passwordhash', 'idColumn' => 'technicianid', 'redirect' => '../Admin/LabTechs.php'],
         ['table' => 'admins', 'passwordColumn' => 'passwordhash', 'idColumn' => 'adminid', 'redirect' => '../Admin/Dashboard.php']
     ];
-
+    
+    
     $emailFound = false;
-
+    $stillConnected=true;
     foreach ($roles as $role) {
         if ($stmt = $conn->prepare("SELECT {$role['idColumn']}, {$role['passwordColumn']} FROM {$role['table']} WHERE contactemail = ?")) {
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
-
+            $is_email=true;
+            // Validate email
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL) || substr($email, -4) !== ".com") {
+                echo "<script>alert('Invalid email format. Email must contain @ and end with .com');</script>";
+                $is_email=false;
+            }
+            if (!$is_email) {
+                $conn->close();
+                $stillConnected=false;
+                break;
+            }
             if ($result->num_rows == 1) {
                 $emailFound = true;
                 $row = $result->fetch_assoc();
@@ -30,9 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['email'] = $email;
                     $_SESSION['role'] = $role['table'];  // store role in session
 
+                    if ($rememberMe == 'on') {
+                        setcookie("user_id", $row[$role['idColumn']], time() + (86400 * 30), "/"); // 86400 = 1 day
+                        setcookie("user_role", $role['table'], time() + (86400 * 30), "/");
+                    }
+
                     header("Location: " . $role['redirect']);
                     exit();
                 } else {
+                    echo "<script>alert('Invalid password.');</script>";
                     $error = "Invalid password.";
                     break;
                 }
@@ -41,13 +59,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    if (!$emailFound) {
-        echo "<script>alert('Email was not found.');</script>";
-    } elseif (!isset($error)) {
-        echo isset($error) ? $error : "No user found with that email address.";
+    if($stillConnected){
+        if (!$emailFound) {
+            echo "<script>alert('Email was not found.');</script>";
+        } elseif (!isset($error)) {
+            echo isset($error) ? $error : "No user found with that email address.";
+        }   
+        $conn->close();
     }
-
-    $conn->close();
 }
 ?>
 
