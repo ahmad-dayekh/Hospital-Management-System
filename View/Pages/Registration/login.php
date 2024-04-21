@@ -36,22 +36,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($result->num_rows == 1) {
                 $emailFound = true;
                 $row = $result->fetch_assoc();
-                if (password_verify($password, $row[$role['passwordColumn']])) {
-                    $_SESSION['user_id'] = $row[$role['idColumn']];
-                    $_SESSION['email'] = $email;
-                    $_SESSION['role'] = $role['table'];
-
-                    if ($rememberMe == 'on') {
-                        setcookie("user_id", $row[$role['idColumn']], time() + 300, "/");
-                        setcookie("user_role", $role['table'], time() + 300, "/");
+                if ($emailFound) {
+                    if (password_verify($password, $row[$role['passwordColumn']])) {
+                        $_SESSION['user_id'] = $row[$role['idColumn']];
+                        $_SESSION['ContactEmail'] = $email;
+                        $_SESSION['role'] = $role['table'];
+            
+                        if ($rememberMe == 'on') {
+                            setcookie("user_email", $email, time() + (86400 * 30), "/", "", isset($_SERVER["HTTPS"]), true);
+                        }
+            
+                        header("Location: " . $role['redirect']);
+                        exit();
+                    } else {
+                        echo "<script>alert('Invalid password.');</script>";
                     }
-
-                    header("Location: " . $role['redirect']);
-                    exit();
                 } else {
-                    echo "<script>alert('Invalid password.');</script>";
-                    $error = "Invalid password.";
-                    break;
+                    echo "<script>alert('Email was not found.');</script>";
                 }
             }
             $stmt->close();

@@ -1,12 +1,10 @@
 <?php
-// Include your database connection script
 include "../../Common PHP Functions/ConnectSql.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve user inputs
     $username = $conn->real_escape_string($_POST['username']);
     $fullName = $conn->real_escape_string($_POST['fullName']);
-    $email = $_POST['email'];  // We use prepared statements, so no need to escape this here
+    $email = $_POST['email'];
     $password = $_POST['password'];
     $phone = $conn->real_escape_string($_POST['phone']);
     $location = $conn->real_escape_string($_POST['location']);
