@@ -16,7 +16,7 @@ CREATE TABLE Admins (
     Username VARCHAR(255) UNIQUE NOT NULL,
     PasswordHash VARCHAR(255) NOT NULL,
     FullName VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) UNIQUE NOT NULL,
+    ContactEmail VARCHAR(255) UNIQUE NOT NULL,
     ContactNumber VARCHAR(25),
     IsActive BOOLEAN DEFAULT 1,
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -67,6 +67,31 @@ CREATE TABLE Appointments (
     FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
     FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
 );
+CREATE TABLE Messages (
+    MessageID INT PRIMARY KEY AUTO_INCREMENT,
+    SenderEmail VARCHAR(255) NOT NULL,
+    ReceiverEmail VARCHAR(255) NOT NULL,
+    Type ENUM('Appointment', 'Report', 'General') NOT NULL,
+    Subject VARCHAR(255) NOT NULL,
+    Body TEXT NOT NULL,
+    SenderID INT NOT NULL,
+    ReceiverID INT NOT NULL,
+    SentDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    IsRead BOOLEAN DEFAULT 0
+);
+
+INSERT INTO Messages 
+(SenderEmail, ReceiverEmail, Type, Subject, Body, SenderID, ReceiverID, SentDate, IsRead)
+VALUES
+('admin@hospital.com', 'alice.brown@example.com', 'General', 'Welcome to Our Medical Center', 'We are pleased to welcome you to our facility and look forward to serving your healthcare needs.', 1, 1, NOW(), 0),
+('jane.smith@hospital.com', 'alice.brown@example.com', 'Appointment', 'Appointment Confirmation', 'Your appointment with Dr. Smith is confirmed for September 30th, 2023 at 3:00 PM.', 1, 1, NOW(), 0),
+('dave.green@lab.com', 'alice.brown@example.com', 'Report', 'Lab Report Available', 'Your recent lab results are now available and have been uploaded to your patient portal.', 1, 1, NOW(), 0),
+('admin@hospital.com', 'jane.smith@hospital.com', 'General', 'Holiday Hours Notification', 'Please note that our offices will be closed next week for the holiday observance.', 1, 1, NOW(), 1),
+('admin@hospital.com', 'bob.white@example.com', 'General', 'Updated Contact Information', 'Please update your profile with your latest contact information.', 1, 2, NOW(), 0),
+('admin@hospital.com', 'john.doe@hospital.com', 'General', 'New Services Available', 'We are excited to announce new healthcare services available at our clinic starting next month.', 1, 2, NOW(), 0),
+('alice.brown@example.com', 'admin@hospital.com', 'General', 'Feedback', 'I had a great experience during my last visit, but I would like to suggest extending clinic hours if possible.', 1, 1, NOW(), 0),
+('dave.green@lab.com', 'admin@hospital.com', 'General', 'Stock Replenishment Needed', 'We are running low on some important lab supplies needed for standard tests. Can we restock them soon?', 1, 1, NOW(), 0),
+('john.doe@hospital.com', 'admin@hospital.com', 'General', 'IT Support Needed', 'There are recurring issues with our patient management system logins. Can we have IT support look into this?', 2, 1, NOW(), 0);
 
 
 INSERT INTO Doctors (Username, PasswordHash, Name, Specialty, ContactEmail, ContactPhone, Availability, Qualifications) VALUES 
