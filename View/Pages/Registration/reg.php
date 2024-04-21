@@ -5,6 +5,7 @@ include "../../Common PHP Functions/ConnectSql.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve user inputs
     $username = $conn->real_escape_string($_POST['username']);
+    $fullName = $conn->real_escape_string($_POST['fullName']);
     $email = $_POST['email'];  // We use prepared statements, so no need to escape this here
     $password = $_POST['password'];
     $phone = $conn->real_escape_string($_POST['phone']);
@@ -44,12 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$is_int || !$is_email) {
         $conn->close();
-    }
+    }else
     if ($emailExists) {
         echo "<script>alert('This email is already registered. Please use a different email.');</script>";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO patients (username, contactemail, passwordhash, contactphone) VALUES ('$username', '$email', '$hashed_password', '$phone')";
+        $sql = "INSERT INTO patients (username, fullname,contactemail, passwordhash, contactphone) VALUES ('$username', '$fullName', '$email', '$hashed_password', '$phone')";
         if ($conn->query($sql) === TRUE) {
             header("Location: login.php");
             exit();
@@ -81,7 +82,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="title">Registration</span>
                 <form action="#" method="post">
                     <div class="input-field">
-                        <input type="text" placeholder="Enter your name" name="username" required>
+                        <input type="text" placeholder="Enter your username" name="username" required>
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" placeholder="Enter your full name" name="fullName" required>
                         <i class="uil uil-user"></i>
                     </div>
                     <div class="input-field">

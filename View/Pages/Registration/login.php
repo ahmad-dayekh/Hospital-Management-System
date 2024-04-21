@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $rememberMe = isset($_POST['remember']) ? $_POST['remember'] : '';
 
-    // Define roles and associated tables and redirect pages
     $roles = [
         ['table' => 'patients', 'passwordColumn' => 'passwordhash', 'idColumn' => 'patientid', 'redirect' => '../Admin/Patients.php'],
         ['table' => 'doctors', 'passwordColumn' => 'passwordhash', 'idColumn' => 'doctorid', 'redirect' => '../Admin/Doctors.php'],
@@ -40,11 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (password_verify($password, $row[$role['passwordColumn']])) {
                     $_SESSION['user_id'] = $row[$role['idColumn']];
                     $_SESSION['email'] = $email;
-                    $_SESSION['role'] = $role['table'];  // store role in session
+                    $_SESSION['role'] = $role['table'];
 
                     if ($rememberMe == 'on') {
-                        setcookie("user_id", $row[$role['idColumn']], time() + (86400 * 30), "/"); // 86400 = 1 day
-                        setcookie("user_role", $role['table'], time() + (86400 * 30), "/");
+                        setcookie("user_id", $row[$role['idColumn']], time() + 300, "/");
+                        setcookie("user_role", $role['table'], time() + 300, "/");
                     }
 
                     header("Location: " . $role['redirect']);
@@ -84,6 +83,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <div class="forms">
             <div class="form login">
+                <div class="hospital-icon" style="text-align: center;">
+                    <img src="../../Images/hospital-login.png" alt="Hospital Icon" style="width:75px; height:75px; display: block; margin: auto;">
+                </div>
                 <span class="title">Login</span>
                 <form action="#" method="post">
                     <div class="input-field">
