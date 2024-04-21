@@ -1,4 +1,3 @@
-
 <?php
 // Include your database connection script
 include "../../Common PHP Functions/ConnectSql.php";
@@ -6,31 +5,56 @@ include "../../Common PHP Functions/ConnectSql.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve user inputs
     $username = $conn->real_escape_string($_POST['username']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = $conn->real_escape_string($_POST['password']); // Consider hashing this password
+    $email = $_POST['email'];  // We use prepared statements, so no need to escape this here
+    $password = $_POST['password'];
     $phone = $conn->real_escape_string($_POST['phone']);
     $location = $conn->real_escape_string($_POST['location']);
 
-    // Hash the password for security
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // Check if email already exists in any of the tables
+    $emailExists = false;
+    $tables = [
+        ['patients', 'contactemail'],
+        ['labtechnicians', 'contactemail'],
+        ['doctors', 'contactemail'],
+        ['admins', 'email']
+    ];
 
-    // SQL to insert a new user
-    $sql = "INSERT INTO patients (username, contactemail, passwordhash, contactphone) VALUES ('$username', '$email', '$hashed_password', '$phone')";
+    foreach ($tables as $table) {
+        $stmt = $conn->prepare("SELECT 1 FROM {$table[0]} WHERE {$table[1]} = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows > 0) {
+            $emailExists = true;
+            $stmt->close();
+            break;
+        }
+        $stmt->close();
+    }
 
-    if ($conn->query($sql) === TRUE) {
-        // Redirect to the login page after successful registration
-        header("Location: login.php");
-        exit();
+    if ($emailExists) {
+        echo "This email is already registered. Please use a different email.";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql = "INSERT INTO patients (username, contactemail, passwordhash, contactphone) VALUES ('$username', '$email', '$hashed_password', '$phone')";
+        if ($conn->query($sql) === TRUE) {
+            header("Location: login.php");
+            exit();
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    
+        $conn->close();
     }
 
     $conn->close();
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="reg-style.css">
     <title>Registration Form</title>
 </head>
-
 <body>
     <div class="container">
         <div class="forms">
@@ -91,5 +114,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

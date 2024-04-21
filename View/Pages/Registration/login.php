@@ -1,41 +1,58 @@
 <?php
-session_start(); // Start the session to use session variables
+session_start();
 include "../../Common PHP Functions/ConnectSql.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = $conn->real_escape_string($_POST['password']);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    // SQL to fetch user from the database
-    $sql = "SELECT patientid, passwordhash FROM patients WHERE contactemail = '$email'";
-    $result = $conn->query($sql);
+    // Define roles and associated tables and redirect pages
+    $roles = [
+        ['table' => 'patients', 'passwordColumn' => 'passwordhash', 'idColumn' => 'patientid', 'redirect' => '../Admin/Patients.php'],
+        ['table' => 'doctors', 'passwordColumn' => 'passwordhash', 'idColumn' => 'doctorid', 'redirect' => '../Admin/Doctors.php'],
+        ['table' => 'labtechnicians', 'passwordColumn' => 'passwordhash', 'idColumn' => 'technicianid', 'redirect' => '../Admin/LabTechs.php'],
+        ['table' => 'admins', 'passwordColumn' => 'passwordhash', 'idColumn' => 'adminid', 'redirect' => '../Admin/Dashboard.php']
+    ];
 
-    if ($result->num_rows == 1) {
-        // Check if the user exists
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['passwordhash'])) {
-            // Password is correct, set the session
-            $_SESSION['user_id'] = $row['patientid']; // make sure to use the correct column name here as well
-            $_SESSION['email'] = $email;
+    $emailFound = false;
 
-            // Redirect to the admin dashboard
-            header("Location: ../Admin/Dashboard.php");
-            exit();
-        } else {
-            echo "Invalid password.";
+    foreach ($roles as $role) {
+        if ($stmt = $conn->prepare("SELECT {$role['idColumn']}, {$role['passwordColumn']} FROM {$role['table']} WHERE contactemail = ?")) {
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows == 1) {
+                $emailFound = true;
+                $row = $result->fetch_assoc();
+                if (password_verify($password, $row[$role['passwordColumn']])) {
+                    $_SESSION['user_id'] = $row[$role['idColumn']];
+                    $_SESSION['email'] = $email;
+                    $_SESSION['role'] = $role['table'];  // store role in session
+
+                    header("Location: " . $role['redirect']);
+                    exit();
+                } else {
+                    $error = "Invalid password.";
+                    break;
+                }
+            }
+            $stmt->close();
         }
-    } else {
-        echo "No user found with that email address.";
+    }
+
+    if (!$emailFound) {
+        echo "<script>alert('Email was not found.');</script>";
+    } elseif (!isset($error)) {
+        echo isset($error) ? $error : "No user found with that email address.";
     }
 
     $conn->close();
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="login-style.css">
     <title>Login Form</title>
 </head>
-
 <body>
     <div class="container">
         <div class="forms">
@@ -81,5 +97,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>
