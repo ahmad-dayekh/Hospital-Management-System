@@ -14,12 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $is_int=false;
     }
     $is_email=true;
-    // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || substr($email, -4) !== ".com") {
         echo "<script>alert('Invalid email format. Email must contain @ and end with .com');</script>";
         $is_email=false;
     }
-    // Check if email already exists in any of the tables
     $emailExists = false;
     $tables = [
         ['patients', 'contactemail'],
