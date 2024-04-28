@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $emailFound = false;
     $stillConnected=true;
     foreach ($roles as $role) {
-        if ($stmt = $conn->prepare("SELECT {$role['idColumn']},{$role['passwordColumn']} FROM {$role['table']} WHERE contactemail = ?")) {
+        if ($stmt = $conn->prepare("SELECT {$role['idColumn']}, {$role['passwordColumn']} FROM {$role['table']} WHERE contactemail = ?")) {
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
