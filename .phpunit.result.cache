@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Tests\\deletePatientTest::testEmailExists":7,"Tests\\FetchAppointmentsTest::testFetchMessages":7},"times":{"Tests\\deletePatientTest::testEmailExists":0.037,"Tests\\FetchAppointmentsTest::testFetchMessages":0.016}}

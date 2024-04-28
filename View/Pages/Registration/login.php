@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             $result = $stmt->get_result();
             $is_email=true;
-            // Validate email
             if (!filter_var($email, FILTER_VALIDATE_EMAIL) || substr($email, -4) !== ".com") {
                 echo "<script>alert('Invalid email format. Email must contain @ and end with .com');</script>";
                 $is_email=false;
@@ -62,9 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($stillConnected){
         if (!$emailFound) {
             echo "<script>alert('Email was not found.');</script>";
-        } elseif (!isset($error)) {
-            echo isset($error) ? $error : "No user found with that email address.";
-        }   
+        }
         $conn->close();
     }
 }

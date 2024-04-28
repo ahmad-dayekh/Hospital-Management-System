@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('This email is already registered. Please use a different email.');</script>";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO patients (username, fullname,contactemail, passwordhash, contactphone) VALUES ('$username', '$fullName', '$email', '$hashed_password', '$phone')";
+        $sql = "INSERT INTO patients (username, fullname,contactemail, passwordhash, contactphone, address) VALUES ('$username', '$fullName', '$email', '$hashed_password', '$phone', '$location')";
         if ($conn->query($sql) === TRUE) {
             header("Location: login.php");
             exit();
