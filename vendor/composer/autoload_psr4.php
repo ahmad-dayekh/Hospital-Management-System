@@ -6,7 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'View\\Pages\\Registration\\' => array($baseDir . '/View/Pages/Registration'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
-    'Model\\' => array($baseDir . '/Model'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );

@@ -5,7 +5,7 @@
 
     <testsuites>
         <testsuite name="FetchAppointmentsManager">
-            <directory>tests5</directory>
+            <directory>Tests/tests1</directory>
         </testsuite>
     </testsuites>
 </phpunit>

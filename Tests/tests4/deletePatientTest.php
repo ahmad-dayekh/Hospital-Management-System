@@ -18,7 +18,7 @@ class deletePatientTest extends TestCase {
     }
 
     public function testEmailExists() {
-        $email = "d@gmail.com";
+        $email = "fake@gmail.com";
 
         $exists = $this->manager->emailExists($email);
         $this->assertTrue($exists);

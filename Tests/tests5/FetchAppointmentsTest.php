@@ -16,7 +16,7 @@ class FetchAppointmentsTest extends TestCase {
     }
 
     public function testFetchMessages() {
-        $testMessage = 'Testing for invalidation.';
+        $testMessage = 'We are pleased to welcome you to our facility and look forward to serving your healthcare needs.';
         $sql = "INSERT INTO Messages (Body) VALUES (?)";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bind_param("s", $testMessage);
@@ -24,7 +24,6 @@ class FetchAppointmentsTest extends TestCase {
         $stmt->close();
         $messages = $this->fetchAppointmentsManager->fetchMessages();
     
-        $this->assertNotEmpty($messages);
         $this->assertEquals($testMessage, $messages[0]['Body']);
     
         $this->dbConnection->rollback();
